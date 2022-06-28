@@ -7,12 +7,12 @@ import java.util.Set;
 
 public class HappyNumbers {
     public boolean isHappy(int n) {
-        if(n < 1) {
+        if (n < 1) {
             throw new IllegalArgumentException("Argument must be greater than 0");
         }
         Set<Integer> visited = new HashSet<>();
         int current = n;
-        while(current != 1 && !visited.contains(current)) {
+        while (current != 1 && !visited.contains(current)) {
             visited.add(current);
             current = sumSquaresOfDigits(current);
         }
@@ -20,13 +20,10 @@ public class HappyNumbers {
     }
 
     int sumSquaresOfDigits(int n) {
-        int total = 0;
-        CharacterIterator iterator = new StringCharacterIterator(String.valueOf(n));
-        while(iterator.current() != CharacterIterator.DONE) {
-            int digit = Integer.parseInt(String.valueOf(iterator.current()));
-            total += (digit * digit);
-            iterator.next();
-        }
-        return total;
+        return String.valueOf(n).chars()
+                .mapToObj(c -> (char) c)
+                .map((a) -> Integer.parseInt(String.valueOf(a)))
+                .map((a) -> a * a)
+                .reduce(Integer::sum).get();
     }
 }
