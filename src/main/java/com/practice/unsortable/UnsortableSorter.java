@@ -5,6 +5,9 @@ import java.util.Arrays;
 public class UnsortableSorter {
 
     public Object[] sort(Object[] nested) {
+        if(nested == null) {
+            throw new IllegalArgumentException("'Unsortable array can't be null");
+        }
         return Arrays.stream(nested).sorted(this::compareUnsortable).toArray();
     }
 
@@ -22,6 +25,6 @@ public class UnsortableSorter {
                 return Integer.compare(((int[]) a)[0], ((int[]) b)[0]);
             }
         }
-        throw new IllegalArgumentException("Can't compare objects in 'unsortable' array " + a.getClass() + " " + b.getClass());
+        throw new IllegalArgumentException("Can't compare null or non int or int[] elements in 'unsortable' array");
     }
 }
